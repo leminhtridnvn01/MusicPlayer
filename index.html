@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicPlayer</title>
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/icon/fontawesome-free-6.0.0-beta2-web/css/all.css">
+</head>
+<body>
+    <div class="player">
+        <!-- Dashboard -->
+        <div class="dashboard">
+          <!-- Header -->
+          <header>
+            <h4>Now playing:</h4>
+            <h2>String 57th & 9th</h2>
+          </header>
+      
+          <!-- CD -->
+          <div class="cd">
+            <div class="cd-thumb">
+            </div>
+          </div>
+      
+          <!-- Control -->
+          <div class="control">
+            <div class="btn btn-repeat">
+              <i class="fas fa-redo"></i>
+            </div>
+            <div class="btn btn-prev">
+              <i class="fas fa-step-backward"></i>
+            </div>
+            <div class="btn btn-toggle-play">
+              <i class="fas fa-pause icon-pause"></i>
+              <i class="fas fa-play icon-play"></i>
+            </div>
+            <div class="btn btn-next">
+              <i class="fas fa-step-forward"></i>
+            </div>
+            <div class="btn btn-random">
+              <i class="fas fa-random"></i>
+            </div>
+          </div>
+      
+          <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+      
+          <audio id="audio" src="" ></audio>
+        </div>
+      
+        <!-- Playlist -->
+        <div class="playlist">
+
+        </div>
+      </div>
+
+      <script>
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+        const player = $('.player');
+        const heading = $('header h2');
+        const cdThumb = $('.cd-thumb');
+        const audio = $('#audio');
+        const cd = $('.cd');
+        const playBtn = $('.btn-toggle-play')
+        const app = {
+          currentIndex: 0,
+          isPlaying: false,
+          songs: [
+            {
+              name:"I want to be a pillow",
+              singer:"J_ust",
+              path:"./assets/music/IWantToBeAPillow-J_ust.mp3",
+              image:"./assets/img/IWantToBeAPillow-J_ust.jpg",
+            },            
+            {
+              name:"Đông Miên",
+              singer:"Tư Nam",
+              path:"./assets/music/DongMien.mp3",
+              image:"./assets/img/DongMien.jpg",
+            },
+            {
+              name:"Phi điểu và ve sầu",
+              singer:"Nhậm Nhiên",
+              path:"./assets/music/PhiDieuVaVeSau.mp3",
+              image:"./assets/img/PhiDieuVaVeSau.jpg",
+            },
+            {
+              name:"Người Kế Nhiệm",
+              singer:"Nhậm Nhiên",
+              path:"./assets/music/NguoiKeNhiem.mp3",
+              image:"./assets/img/NguoiKeNhiem.jpg",
+            },
+            {
+              name:"Một triệu khả năng",
+              singer:"Trương Hàm Vận",
+              path:"./assets/music/MotTrieuKhaNang.mp3",
+              image:"./assets/img/MotTrieuKhaNang.jpg",
+            },
+            {
+              name:"Me After You",
+              singer:"Paul Kim",
+              path:"./assets/music/MeAfterYou.mp3",
+              image:"./assets/img/MeAfterYou.jpg",
+            },
+            {
+              name:"Dễ thay đổi",
+              singer:"Vương Tĩnh Văn",
+              path:"./assets/music/DeThayDoi-VuongTinhVanKhongMap",
+              image:"./assets/img/DeThayDoi.jfif",
+            },
+          ],
+          render: function(){
+            const htmls = this.songs.map(
+                        (song, index) => 
+                        `
+                        <div class="song" data-index="${index}">
+                            <div
+                                class="thumb"
+                                style="background-image: url('${song.image}');"
+                            ></div>
+                            <div class="body">
+                                <h3 class="title">${song.name}</h3>
+                                <p class="author">${song.singer}</p>
+                            </div>
+                            <div class="option">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                        </div>
+                        `
+                    );
+                    $('.playlist').innerHTML = htmls.join("");
+          },
+          defineProperties: function(){
+            Object.defineProperty(this,'currentSong',{
+              get: function(){
+                return this.songs[this.currentIndex];
+              }
+            })
+          },
+          handleEvents: function(){
+            const _this = this;
+            const cdWidth = cd.offsetWidth;
+            console.log(cd);
+            console.log(cdWidth);
+
+            document.onscroll = function(){
+              const scrollTop = window.scrollY;
+              const newCdWidth = cdWidth - scrollTop;
+              cd.style.width = newCdWidth > 0 ? newCdWidth + 'px' : 0;
+              console.log(newCdWidth/cdWidth);
+              cd.style.opacity = newCdWidth/cdWidth;
+            }
+
+            playBtn.onclick = function(){
+              if(_this.isPlaying == false){
+                audio.play();
+                player.classList.add('playing');
+                _this.isPlaying = true;
+              }
+              else{
+                audio.pause();
+                player.classList.remove('playing');
+                _this.isPlaying = false;
+              }
+
+
+            }
+          },
+          loadCurrentSong: function(){
+            // console.log(heading,cdThumb,audio)
+            heading.textContent = this.currentSong.name;
+            cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
+            audio.src = this.currentSong.path;
+          },
+          start:  function(){
+            this.defineProperties();
+            this.handleEvents();
+            this.loadCurrentSong();
+            this.render();
+          }
+        }
+        app.start();
+      </script>
+</body>
+</html>
