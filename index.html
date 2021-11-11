@@ -244,7 +244,6 @@
               else{
                 this.classList.remove('active');
                 _this.isRandom = false;
-
               }
             }
             //khi tua
@@ -253,7 +252,12 @@
               audio.currentTime = seekTime;
               console.log(audio.currentTime);
             }
-
+            //khi bai hat ket thuc
+            audio.onended = function(){
+              _this.nextSong();
+              audio.play();
+              cdThumbAnimate.play();
+            }
           },
           loadCurrentSong: function(){
             // console.log(heading,cdThumb,audio)
@@ -262,27 +266,35 @@
             audio.src = this.currentSong.path;
           },
           nextSong: function(){
-            this.currentIndex++;
-            if(this.currentIndex >= this.songs.length){
-              this.currentIndex = 0;
+            if(this.isRandom == true){
+              this.randomSong();
             }
-            this.loadCurrentSong();
+            else{
+              this.currentIndex++;
+              if(this.currentIndex >= this.songs.length){
+                this.currentIndex = 0;
+              }
+              this.loadCurrentSong();
+            }
           },  
           prevSong: function(){
-            this.currentIndex--;
-            if(this.currentIndex < 0){
-              this.currentIndex = this.songs.length-1;
+            if(this.isRandom == true){
+              this.randomSong();
             }
-            this.loadCurrentSong();
+            else{
+              this.currentIndex--;
+              if(this.currentIndex < 0){
+                this.currentIndex = this.songs.length-1;
+              }
+              this.loadCurrentSong();
+            }
           },          
           randomSong: function(){
             const crrInd = this.currentIndex;
             this.currentIndex = Math.floor(Math.random() * (this.songs.length)); 
-            while(this.currentIndex == crrInd ){
+            while(this.currentIndex === crrInd ){
               this.currentIndex = Math.floor(Math.random() * (this.songs.length));
             }
-              
-            console.log(this.currentIndex) 
             this.loadCurrentSong();
           }, 
           start:  function(){
