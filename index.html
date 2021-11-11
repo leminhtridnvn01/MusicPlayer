@@ -53,7 +53,7 @@
               
             </div> 
             <div class="sound" > 
-              <input class="volume" type="range" value="100" step="1" min="0" max="100" >
+              <input class="volume" type="range" value="50" step="1" min="0" max="100" >
             </div>
           </div>
             <!-- <div  class="volume"></div>           -->
@@ -76,9 +76,11 @@
         const cdThumb = $('.cd-thumb');
         const audio = $('#audio');
         const cd = $('.cd');
-        const playBtn = $('.btn-toggle-play')
-        const progress = $('#progress')
-        const volumn = $('.btn.btn-volume')
+        const playBtn = $('.btn-toggle-play');
+        const nextBtn = $('.btn-next');
+        const prevBtn = $('.btn-prev');
+        const progress = $('#progress');
+        const volumn = $('.btn.btn-volume');
         const volume = $('.volume');
         const app = {
           currentIndex: 0,
@@ -124,7 +126,7 @@
             {
               name:"Dễ thay đổi",
               singer:"Vương Tĩnh Văn",
-              path:"./assets/music/DeThayDoi-VuongTinhVanKhongMap",
+              path:"./assets/music/DeThayDoi.mp3",
               image:"./assets/img/DeThayDoi.jfif",
             },
           ],
@@ -161,21 +163,31 @@
             const cdWidth = cd.offsetWidth;
             console.log(cd);
             console.log(cdWidth);
-
+            //khi cd quay
+            const cdThumbAnimate = cdThumb.animate([
+              {transform: 'rotate(360deg)'}
+            ],{
+              duration: 10000,
+              iterations: Infinity
+            })
+            cdThumbAnimate.pause();
+            //khi scroll
             document.onscroll = function(){
               const scrollTop = window.scrollY;
               const newCdWidth = cdWidth - scrollTop;
               cd.style.width = newCdWidth > 0 ? newCdWidth + 'px' : 0;
-              console.log(newCdWidth/cdWidth);
               cd.style.opacity = newCdWidth/cdWidth;
             }
-
+            //khi play
             playBtn.onclick = function(){
+              audio.volume = volume.value / 100;
               if(_this.isPlaying == false){
                 audio.play();
+                cdThumbAnimate.play();
               }
               else{
                 audio.pause();
+                cdThumbAnimate.pause();
               }
             }
             audio.onplay = function(){
@@ -186,20 +198,32 @@
               player.classList.remove('playing');
                 _this.isPlaying = false;
             }
-
+            //khi bai hat dang chay
             audio.ontimeupdate = function(){
               if(audio.duration){
                 const progressPercent = Math.floor(audio.currentTime / audio.duration * 100);
                 progress.value = progressPercent;
               }
             }
-
+            //khi next
+            nextBtn.onclick = function(){
+              _this.nextSong();
+              audio.play();
+              cdThumbAnimate.play();
+            }
+            //khi prev
+            prevBtn.onclick = function(){
+              _this.prevSong();
+              audio.play();
+              cdThumbAnimate.play();
+            }
+            //khi tua
             progress.onchange = function(e){
               const seekTime = e.target.value * audio.duration /100;
               audio.currentTime = seekTime;
               console.log(audio.currentTime);
             }
-
+            //khi chinh am luong
             volumn.onclick = function(){
               if(_this.isVolumn == false){               
                 $('.volume').style.display = "inline-block"; 
@@ -223,6 +247,20 @@
             cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
             audio.src = this.currentSong.path;
           },
+          nextSong: function(){
+            this.currentIndex++;
+            if(this.currentIndex >= this.songs.length){
+              this.currentIndex = 0;
+            }
+            this.loadCurrentSong();
+          },  
+          prevSong: function(){
+            this.currentIndex--;
+            if(this.currentIndex < 0){
+              this.currentIndex = this.songs.length-1;
+            }
+            this.loadCurrentSong();
+          }, 
           start:  function(){
             this.defineProperties();
             this.handleEvents();
