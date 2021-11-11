@@ -218,6 +218,12 @@
               audio.play();
               cdThumbAnimate.play();
             }
+            //khi random
+            randomBtn.onclick = function(){
+              _this.randomSong();
+              audio.play();
+              cdThumbAnimate.play();
+            }
             //khi tua
             progress.onchange = function(e){
               const seekTime = e.target.value * audio.duration /100;
@@ -239,7 +245,6 @@
             volume.onchange = function(e){
               const volumePercent = e.target.value / 100;
               audio.volume = volumePercent;
-              alert(volumePercent)
             }
           },
           loadCurrentSong: function(){
@@ -260,6 +265,16 @@
             if(this.currentIndex < 0){
               this.currentIndex = this.songs.length-1;
             }
+            this.loadCurrentSong();
+          },          
+          randomSong: function(){
+            const crrInd = this.currentIndex;
+            this.currentIndex = Math.floor(Math.random() * (this.songs.length)); 
+            while(this.currentIndex == crrInd ){
+              this.currentIndex = Math.floor(Math.random() * (this.songs.length));
+            }
+              
+            console.log(this.currentIndex) 
             this.loadCurrentSong();
           }, 
           start:  function(){
