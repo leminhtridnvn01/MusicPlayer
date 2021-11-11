@@ -44,10 +44,20 @@
               <i class="fas fa-random"></i>
             </div>
           </div>
-      
-          <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
-      
-          <audio id="audio" src="" ></audio>
+          
+          <div class="load">
+            <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+            <div class="btn btn-volume">
+              <i class="fas fa-volume-up"></i>
+              
+            </div> 
+            <div class="sound" > 
+              <input class="volume" type="range" value="100" step="1" min="0" max="100">
+            </div>
+            <!-- <div  class="volume"></div>           -->
+            <audio id="audio" src="" ></audio>
+          </div>
+
         </div>
       
         <!-- Playlist -->
@@ -66,9 +76,12 @@
         const cd = $('.cd');
         const playBtn = $('.btn-toggle-play')
         const progress = $('#progress')
+        const volumn = $('.btn.btn-volume')
+        const volume = $('.volume');
         const app = {
           currentIndex: 0,
           isPlaying: false,
+          isVolumn: false,
           songs: [
             {
               name:"I want to be a pillow",
@@ -183,6 +196,23 @@
               const seekTime = e.target.value * audio.duration /100;
               audio.currentTime = seekTime;
               console.log(audio.currentTime);
+            }
+
+            volumn.onclick = function(){
+              if(_this.isVolumn == false){               
+                $('.volume').style.display = "inline-block"; 
+                _this.isVolumn = true;
+              }
+              else{
+                $('.volume').style.display = "none"; 
+                _this.isVolumn = false;
+              }
+            }
+
+            volume.onclick = function(e){
+              const volumePercent = e.target.value / 100;
+              audio.volume = volumePercent;
+              console.log(volumePercent)
             }
           },
           loadCurrentSong: function(){
