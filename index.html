@@ -235,7 +235,7 @@
               }
             }
 
-            volume.onclick = function(e){
+            volume.onchange = function(e){
               const volumePercent = e.target.value / 100;
               audio.volume = volumePercent;
               console.log(volumePercent)
