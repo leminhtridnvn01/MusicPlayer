@@ -80,6 +80,7 @@
         const nextBtn = $('.btn-next');
         const prevBtn = $('.btn-prev');
         const randomBtn = $('.btn-random');
+        const repeatBtn = $('.btn-repeat');
         const progress = $('#progress');
         const volumn = $('.btn.btn-volume');
         const volume = $('.volume');
@@ -245,6 +246,12 @@
                 this.classList.remove('active');
                 _this.isRandom = false;
               }
+            }
+            //khi repeat
+            repeatBtn.onclick = function(){
+              audio.currentTime = 0;
+              audio.play();
+              cdThumbAnimate.play();
             }
             //khi tua
             progress.onchange = function(e){
