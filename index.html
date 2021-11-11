@@ -65,6 +65,7 @@
         const audio = $('#audio');
         const cd = $('.cd');
         const playBtn = $('.btn-toggle-play')
+        const progress = $('#progress')
         const app = {
           currentIndex: 0,
           isPlaying: false,
@@ -157,16 +158,31 @@
             playBtn.onclick = function(){
               if(_this.isPlaying == false){
                 audio.play();
-                player.classList.add('playing');
-                _this.isPlaying = true;
               }
               else{
                 audio.pause();
-                player.classList.remove('playing');
-                _this.isPlaying = false;
               }
+            }
+            audio.onplay = function(){
+              player.classList.add('playing');
+              _this.isPlaying = true;
+            }
+            audio.onpause = function(){
+              player.classList.remove('playing');
+                _this.isPlaying = false;
+            }
 
+            audio.ontimeupdate = function(){
+              if(audio.duration){
+                const progressPercent = Math.floor(audio.currentTime / audio.duration * 100);
+                progress.value = progressPercent;
+              }
+            }
 
+            progress.onchange = function(e){
+              const seekTime = e.target.value * audio.duration /100;
+              audio.currentTime = seekTime;
+              console.log(audio.currentTime);
             }
           },
           loadCurrentSong: function(){
