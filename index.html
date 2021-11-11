@@ -52,9 +52,9 @@
               <i class="fas fa-volume-up"></i>
               
             </div> 
-            <div class="sound" > 
+            <!-- <div class="sound" >  -->
               <input class="volume" type="range" value="50" step="1" min="0" max="100" >
-            </div>
+            <!-- </div> -->
           </div>
             <!-- <div  class="volume"></div>           -->
             <audio id="audio" src="" ></audio>
@@ -87,6 +87,7 @@
           currentIndex: 0,
           isPlaying: false,
           isVolumn: false,
+          isRandom: false,
           songs: [
             {
               name:"I want to be a pillow",
@@ -235,10 +236,16 @@
               cdThumbAnimate.play();
             }
             //khi random
-            randomBtn.onclick = function(){
-              _this.randomSong();
-              audio.play();
-              cdThumbAnimate.play();
+            randomBtn.onclick = function(e){
+              if(_this.isRandom == false){
+                this.classList.add('active')
+                _this.isRandom = true;
+              }
+              else{
+                this.classList.remove('active');
+                _this.isRandom = false;
+
+              }
             }
             //khi tua
             progress.onchange = function(e){

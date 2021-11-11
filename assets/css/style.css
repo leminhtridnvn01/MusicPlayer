@@ -130,13 +130,15 @@
   .volumeSetting {
   }
   .sound{
+  
+  }
+  .volume {
     position: absolute;
     /* left: 368px;
     top: 268px; */
     transform-origin: -2px -22px;
     -webkit-transform: rotate(-90deg);
-  }
-  .sound .volume {
+
     height: 10px;
     outline: none;
     opacity: 0.7;
