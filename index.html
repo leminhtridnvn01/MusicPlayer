@@ -132,6 +132,24 @@
               path:"./assets/music/DeThayDoi.mp3",
               image:"./assets/img/DeThayDoi.jfif",
             },
+            {
+              name:"Đảo không người",
+              singer:"Nhậm Nhiên",
+              path:"./assets/music/DaoKhongNguoi.mp3",
+              image:"./assets/img/DaoKhongNguoi.jpg",
+            },
+            {
+              name:"Kiêu Ngạo",
+              singer:"Huy Vạc",
+              path:"./assets/music/KieuNgao.mp3",
+              image:"./assets/img/KieuNgao.jpg",
+            },
+            {
+              name:"To My Youth",
+              singer:"BolBBalgan4",
+              path:"./assets/music/ToMyYouth.mp3",
+              image:"./assets/img/ToMyYouth.jpg",
+            },
           ],
           render: function(){
             const htmls = this.songs.map(
@@ -268,6 +286,7 @@
           },
           loadCurrentSong: function(){
             // console.log(heading,cdThumb,audio)
+            audio.volume = volume.value / 100;
             heading.textContent = this.currentSong.name;
             cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
             audio.src = this.currentSong.path;
