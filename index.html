@@ -214,8 +214,6 @@
             const _this = this;
             const cdWidth = cd.offsetWidth;
 
-            console.log(cd);
-            console.log(cdWidth);
             //khi chinh am luong
             volumn.onclick = function(){
               if(_this.isVolumn == false){               
@@ -334,7 +332,11 @@
             }
             //khi bai hat ket thuc
             audio.onended = function(){
+              const act = document.querySelector(`[data-index="${_this.currentIndex}"]`);
+              act.classList.remove('active');
               _this.nextSong();
+              const act2 = document.querySelector(`[data-index="${_this.currentIndex}"]`);
+              act2.classList.add('active');
               audio.play();
               cdThumbAnimate.play();
             }
