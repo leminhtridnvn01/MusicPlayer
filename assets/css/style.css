@@ -127,6 +127,9 @@
     font-size: 18px;
     position: relative;
   }
+  .load .btn.active{
+    color: var(--primary-color);
+  }
   .volumeSetting {
   }
   .sound{

@@ -129,7 +129,7 @@
             },
             {
               name:"Dễ thay đổi",
-              singer:"Vương Tĩnh Văn",
+              singer:"Vương Tĩnh Văn Không Mập",
               path:"./assets/music/DeThayDoi.mp3",
               image:"./assets/img/DeThayDoi.jfif",
             },
@@ -150,6 +150,36 @@
               singer:"BolBBalgan4",
               path:"./assets/music/ToMyYouth.mp3",
               image:"./assets/img/ToMyYouth.jpg",
+            },
+            {
+              name:"Dũng Khí",
+              singer:"Miên Tử",
+              path:"./assets/music/DungKhi.mp3",
+              image:"./assets/img/DungKhi.jpg",
+            },
+            {
+              name:"Thời Không Sai Lệch",
+              singer:"Ngải Thần",
+              path:"./assets/music/ThoiKhongSaiLech.mp3",
+              image:"./assets/img/ThoiKhongSaiLech.jpg",
+            },            
+            {
+              name:"Chỉ Mong Trái Tim Người",
+              singer:"Lý Hành Lượng _ Vũ Tông Lâm",
+              path:"./assets/music/ChiMongTraiTimNguoi.mp3",
+              image:"./assets/img/ChiMongTraiTimNguoi.jpg",
+            },
+            {
+              name:"All About You (Hotel DelLuna Ost)",
+              singer:"TaeYeon SNSD",
+              path:"./assets/music/AllAboutYouHotelDelLunaOst.mp3",
+              image:"./assets/img/AllAboutYouHotelDelLunaOst.jpg",
+            },
+            {
+              name:"Through The Night",
+              singer:"IU",
+              path:"./assets/music/ThroughTheNight.mp3",
+              image:"./assets/img/ThroughTheNight.jpg",
             },
           ],
           render: function(){
@@ -190,10 +220,12 @@
             volumn.onclick = function(){
               if(_this.isVolumn == false){               
                 $('.volume').style.display = "inline-block"; 
+                this.classList.add('active');
                 _this.isVolumn = true;
               }
               else{
                 $('.volume').style.display = "none"; 
+                this.classList.remove('active');
                 _this.isVolumn = false;
               }
             }
