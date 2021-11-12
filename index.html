@@ -40,8 +40,14 @@
             <div class="btn btn-next">
               <i class="fas fa-step-forward"></i>
             </div>
-            <div class="btn btn-random">
+            <div class="btn loop btn-random">
               <i class="fas fa-random"></i>
+            </div>
+            <div class="btn btn-loop active">
+              <i class="fas fa-repeat"></i>
+            </div>
+            <div class="btn loop btn-loop-one">
+              <i class="fa-solid fa-1"></i>
             </div>
           </div>
           
@@ -81,6 +87,8 @@
         const prevBtn = $('.btn-prev');
         const randomBtn = $('.btn-random');
         const repeatBtn = $('.btn-repeat');
+        const loopBtn = $('.btn-loop');
+        const loop1Btn = $('.btn-loop-one');
         const progress = $('#progress');
         const volumn = $('.btn.btn-volume');
         const volume = $('.volume');
@@ -90,6 +98,8 @@
           isPlaying: false,
           isVolumn: false,
           isRandom: false,
+          isLoop: true,
+          isLoop1: false,
           songs: [
             {
               name:"I want to be a pillow",
@@ -308,20 +318,45 @@
             }
             //khi random
             randomBtn.onclick = function(e){
-              if(_this.isRandom == false){
-                this.classList.add('active')
-                _this.isRandom = true;
-              }
-              else{
-                this.classList.remove('active');
-                _this.isRandom = false;
-              }
+              this.classList.remove('active');
+              this.style.display = "none";
+              _this.isRandom = false;
+              loop1Btn.style.display = "inline-block";
+              loop1Btn.classList.add('active');
+              _this.isLoop1 = true;
+              // if(_this.isRandom == false){
+              //   this.classList.add('active')
+              //   _this.isRandom = true;
+              // }
+              // else{
+              //   this.classList.remove('active');
+              //   _this.isRandom = false;
+              // }
+            }
+            //khi loop1
+            loop1Btn.onclick = function(){
+              this.classList.remove('active');
+              this.style.display = "none";
+              _this.isLoop1 = false;
+              loopBtn.style.display = "inline-block";
+              loopBtn.classList.add('active');
+              _this.isLoop = true;
             }
             //khi repeat
             repeatBtn.onclick = function(){
               audio.currentTime = 0;
               audio.play();
               cdThumbAnimate.play();
+            }
+            //khi lap
+            loopBtn.onclick = function(){
+              this.classList.remove('active');
+              this.style.display = "none";
+              _this.isLoop = false;
+              console.log(randomBtn)
+              randomBtn.style.display = "inline-block";
+              randomBtn.classList.add('active');
+              _this.isRandom = true;
             }
             //khi tua
             progress.onchange = function(e){
@@ -363,6 +398,9 @@
           nextSong: function(){
             if(this.isRandom == true){
               this.randomSong();
+            }
+            else if(this.isLoop1 == true){
+              this.loadCurrentSong();
             }
             else{
               this.currentIndex++;
