@@ -296,7 +296,7 @@
                 // _this.isPeeking = false;
                 const progressPercent = Math.floor(audio.currentTime / audio.duration * 100);
                 progress.value = progressPercent;
-                console.log(progress.value);
+                // console.log(progress.value);
               }
             }
             //khi next
@@ -366,6 +366,7 @@
               _this.isPeeking = true;
               const seekTime = e.target.value * audio.duration /100;
               audio.currentTime = seekTime;
+              console.log(_this.isPeeking);
               _this.isPeeking = false;
             }
             //khi click vao bai hat
