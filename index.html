@@ -204,6 +204,12 @@
               path:"./assets/music/JeTaime.mp3",
               image:"./assets/img/JeTaime.jpg",
             },
+            {
+              name:"Flying, Deep In The Night",
+              singer:"Lee Suhyun (AKMU), Onew (SHINee)",
+              path:"./assets/music/FlyingDeepInNight.mp3",
+              image:"./assets/img/FlyingDeepInNight.jpg",
+            },
           ],
           render: function(){
             const htmls = this.songs.map(
@@ -366,6 +372,7 @@
               _this.isPeeking = true;
               const seekTime = e.target.value * audio.duration /100;
               audio.currentTime = seekTime;
+              console.log(seekTime);
               console.log(_this.isPeeking);
               _this.isPeeking = false;
             }
